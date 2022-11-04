@@ -3,10 +3,10 @@
     "description": "Runs deepbleed",
     "label": "deepbleed",
     "info-url": "https://github.com/msharrock/deepbleed",
-    "version": "1.0",
-    "schema-version": "0.1",
+    "version": "0.2",
+    "schema-version": "0.2",
     "type": "docker",
-    "image": "msharrock/deepbleed",
+    "image": "0rc0/deepbleed_xnat",
     "override-entrypoint" : true,
     "command-line": "python predict.py --indir /input --outdir /output --weights /weights/weights_index",
     "mounts": [

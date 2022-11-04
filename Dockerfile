@@ -2,7 +2,7 @@ FROM msharrock/deepbleed:latest
 
 #Rerplace the original predict.py
 ADD predict.py /deepbleed/predict.py
-
+ADD command.json /
 #Download weights in the /weights folder
 RUN mkdir /weights && \
     cd /weights &&\
@@ -22,3 +22,5 @@ RUN cd /deepbleed && \
 WORKDIR /deepbleed
 
 CMD ["bash", "-c", "source /etc/bash.bashrc"]
+
+LABEL org.nrg.commands="{\"name\":\"deepbleed\",\"description\":\"Runs deepbleed\",\"label\":\"deepbleed\",\"info-url\":\"https://github.com/msharrock/deepbleed\",\"version\":\"1.0\",\"schema-version\":\"0.1\",\"type\":\"docker\",\"image\":\"msharrock/deepbleed\",\"override-entrypoint\":true,\"command-line\":\"python predict.py --indir /input --outdir /output --weights /weights/weights_index\",\"mounts\":[{\"name\":\"in\",\"writable\":\"true\",\"path\":\"/input\"},{\"name\":\"nifti-out\",\"writable\":\"true\",\"path\":\"/output\"}],\"inputs\":[],\"outputs\":[{\"name\":\"nifti\",\"description\":\"The nifti files\",\"mount\":\"nifti-out\",\"required\":\"true\"}],\"xnat\":[{\"name\":\"deepbleed-scan\",\"description\":\"Run deepbleed on a Scan\",\"label\":\"deepbleed\",\"contexts\":[\"xnat:imageScanData\"],\"external-inputs\":[{\"name\":\"scan\",\"description\":\"Input scan\",\"type\":\"Scan\",\"required\":true,\"matcher\":\"'NIFTI' in @.resources[*].label\"}],\"derived-inputs\":[{\"name\":\"scan-nifti\",\"description\":\"The Nifti resource on the scan\",\"type\":\"Resource\",\"derived-from-wrapper-input\":\"scan\",\"provides-files-for-command-mount\":\"in\",\"matcher\":\"@.label == 'NIFTI'\"}],\"output-handlers\":[{\"name\":\"nifti-resource\",\"accepts-command-output\":\"nifti\",\"as-a-child-of-wrapper-input\":\"scan\",\"type\":\"Resource\",\"label\":\"NIFTI_MASK\"}]}]}"
