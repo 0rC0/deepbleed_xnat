@@ -46,7 +46,7 @@ else:
 
 # set paths to scripts, templates, weights etc.
 TEMPLATE_PATH = os.path.join('templates', 'scct_unsmooth_SS_0.01_128x128x128.nii.gz')
-acebook
+
 if setup.weights:
     WEIGHT_PATH = setup.weights
 else:
